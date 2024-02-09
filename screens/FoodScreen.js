@@ -139,238 +139,268 @@ const FoodScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-        <View style={styles.headerContainer}>
-          <Text style={styles.title}>قائمة الطعام</Text>
-        </View>
-
-        <TouchableOpacity
-          onPress={() => setModalVisible(true)}
-          style={styles.addButton}
-        >
-          <Text style={styles.addButtonText}>+ أضف طعام جديد</Text>
-        </TouchableOpacity>
-
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={viewFoodsModal}
-          onRequestClose={() => setViewFoodsModal(false)}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              {selectedFood && ( // تأكد من وجود وجبة مختارة قبل العرض
-                <>
-                  <View style={styles.titleShow}>
-                    <Text> Name :</Text>
-                  </View>
-                  <View style={styles.cboredr}>
-                    <Text style={styles.nameShow}>{selectedFood.name}</Text>
-                  </View>
-                  <View style={styles.titleShow}>
-                    <Text> Description :</Text>
-                  </View>
-                  <View style={styles.cboredr}>
-                    <Text style={styles.DisShow}>
-                      {selectedFood.description}
-                    </Text>
-                  </View>
-                  <View style={styles.titleShow}>
-                    <Text> Calories :</Text>
-                  </View>
-                  <View style={styles.chboredr}>
-                    <Text style={styles.otherShow}>
-                      {selectedFood.calories}
-                    </Text>
-                  </View>
-                  <View style={styles.titleShow}>
-                    <Text> Protein :</Text>
-                  </View>
-                  <View style={styles.chboredr}>
-                    <Text style={styles.otherShow}>{selectedFood.Protein}</Text>
-                  </View>
-
-                  <View style={styles.titleShow}>
-                    <Text> Carbs :</Text>
-                  </View>
-                  <View style={styles.chboredr}>
-                    <Text style={styles.otherShow}>{selectedFood.Carbs}</Text>
-                  </View>
-                  <View style={styles.titleShow}>
-                    <Text> Fat :</Text>
-                  </View>
-                  <View style={styles.chboredr}>
-                    <Text style={styles.otherShow}>{selectedFood.Fat}</Text>
-                  </View>
-                </>
-              )}
-              <TouchableOpacity
-                onPress={() => setViewFoodsModal(false)}
-                style={styles.deleteButton}
-              >
-                <Text style={styles.deleteButton}>إغلاق</Text>
-              </TouchableOpacity>
-            </View>
+      <PaperProvider>
+        <ScrollView style={styles.scrollView}>
+          <View style={styles.headerContainer}>
+            <Text style={styles.title}>قائمة الطعام</Text>
+            <TouchableOpacity
+              onPress={() => setModalVisible(true)}
+              style={styles.addButton}
+            >
+              <Ionicons name="add-circle-outline" color={"white"} size={40} />
+            </TouchableOpacity>
           </View>
-        </Modal>
 
-        {foods.map((food, index) => (
-          <View key={index} style={styles.item}>
-            <Text style={styles.itemText}> {food.name}</Text>
-            <View style={styles.rowsd}>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={viewFoodsModal}
+            onRequestClose={() => setViewFoodsModal(false)}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                {selectedFood && ( // تأكد من وجود وجبة مختارة قبل العرض
+                  <>
+                    <View style={styles.titleShow}>
+                      <Text style={styles.ttitleShow}> Name :</Text>
+                    </View>
+                    <View style={styles.cboredr}>
+                      <Text style={styles.nameShow}>{selectedFood.name}</Text>
+                    </View>
+                    <View style={styles.titleShow}>
+                      <Text style={styles.ttitleShow}> Description :</Text>
+                    </View>
+                    <View style={styles.cboredr}>
+                      <Text style={styles.DisShow}>
+                        {selectedFood.description}
+                      </Text>
+                    </View>
+                    <View style={styles.row2c1}>
+                      <View style={styles.row2c2}>
+                        <View style={styles.titleShow}>
+                          <Text style={styles.ttitleShow}> Calories :</Text>
+                        </View>
+                        <View style={styles.chboredr}>
+                          <Text style={styles.otherShow}>
+                            {selectedFood.calories} g
+                          </Text>
+                        </View>
+                      </View>
+                      <View style={styles.row2c2}>
+                        <View style={styles.titleShow}>
+                          <Text style={styles.ttitleShow}> Protein :</Text>
+                        </View>
+                        <View style={styles.chboredr}>
+                          <Text style={styles.otherShow}>
+                            {selectedFood.Protein} g
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+
+                    <View style={styles.row2c1}>
+                      <View style={styles.row2c2}>
+                        <View style={styles.titleShow}>
+                          <Text style={styles.ttitleShow}> Carbs :</Text>
+                        </View>
+                        <View style={styles.chboredr}>
+                          <Text style={styles.otherShow}>
+                            {selectedFood.Carbs} g
+                          </Text>
+                        </View>
+                      </View>
+                      <View style={styles.row2c2}>
+                        <View style={styles.titleShow}>
+                          <Text style={styles.ttitleShow}> Fat :</Text>
+                        </View>
+                        <View style={styles.chboredr}>
+                          <Text style={styles.otherShow}>
+                            {selectedFood.Fat} g
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  </>
+                )}
+                <TouchableOpacity
+                  onPress={() => setViewFoodsModal(false)}
+                  style={styles.deleteButton}
+                >
+                  <Text style={styles.ttitleShow}>إغلاق</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+
+          {foods.map((food, index) => (
+            <View key={index} style={styles.item}>
               <TouchableOpacity
                 onPress={() => viewFoodDetails(food)} // استدعاء viewFoodDetails مع الوجبة المختارة
                 style={styles.ShowButton}
               >
-                <Text style={styles.deleteButtonText}>عرض</Text>
+                <View style={styles.citemText}>
+                  <Text style={styles.itemText}> {food.name}</Text>
+                </View>
               </TouchableOpacity>
 
-              <Menu
-                visible={visibleMenuIndex === index}
-                onDismiss={closeMenu}
-                anchor={
-                  <TouchableOpacity
-                    onPress={() => openMenu(index)}
-                    style={styles.ShowButton}
-                  >
-                    <Ionicons
-                      name="settings-outline"
-                      color={"white"}
-                      size={30}
-                    />
-                  </TouchableOpacity>
-                }
-              >
-                <Menu.Item
+              <View>
+                <Menu
+                  visible={visibleMenuIndex === index}
+                  onDismiss={closeMenu}
+                  anchor={
+                    <TouchableOpacity
+                      onPress={() => openMenu(index)}
+                      style={styles.MButton}
+                    >
+                      <Ionicons
+                        name="settings-outline"
+                        color={"black"}
+                        size={30}
+                      />
+                    </TouchableOpacity>
+                  }
+                >
+                  <Menu.Item
+                    onPress={() => {
+                      deleteFood(index); // استدعاء دالة الحذف
+                      closeMenu(); // إغلاق القائمة
+                    }}
+                    title="حذف الطعام"
+                  />
+                  <Menu.Item onPress={() => {}} title=" تعديل الطعام " />
+                  <Divider />
+                </Menu>
+              </View>
+            </View>
+          ))}
+
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => setModalVisible(false)}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <TouchableOpacity
                   onPress={() => {
-                    deleteFood(index); // استدعاء دالة الحذف
-                    closeMenu(); // إغلاق القائمة
-                  }}
-                  title="حذف الطعام"
-                />
-                <Menu.Item onPress={() => {}} title="تعديل الطعام " />
-                <Divider />
-              </Menu>
-            </View>
-          </View>
-        ))}
-
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => setModalVisible(false)}
-        >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <TouchableOpacity
-                onPress={() => {
-                  // عرض تنبيه يسأل المستخدم إذا كان يرغب في إلغاء الإضافة
-                  Alert.alert(
-                    "إلغاء الإضافة",
-                    "هل أنت متأكد أنك تريد إلغاء إضافة الطعام؟",
-                    [
-                      {
-                        text: "تراجع",
-                        onPress: () => console.log("تراجع عن الإلغاء"),
-                        style: "cancel",
-                      },
-                      {
-                        text: "نعم",
-                        onPress: () => {
-                          console.log("إلغاء الإضافة");
-                          setModalVisible(false); // إغلاق المودال
-                          // إعادة تصفير الحقول إذا لزم الأمر
-                          setNewFoodName("");
-                          setNewFoodDescription("");
-                          setNewFoodCalories("");
-                          setNewFoodProtein("");
-                          setNewFoodCarbs("");
-                          setNewFoodFat("");
+                    // عرض تنبيه يسأل المستخدم إذا كان يرغب في إلغاء الإضافة
+                    Alert.alert(
+                      "إلغاء الإضافة",
+                      "هل أنت متأكد أنك تريد إلغاء إضافة الطعام؟",
+                      [
+                        {
+                          text: "تراجع",
+                          onPress: () => console.log("تراجع عن الإلغاء"),
+                          style: "cancel",
                         },
-                      },
-                    ],
-                    { cancelable: false }
-                  );
-                }}
-                style={{ alignSelf: "flex-end" }} // ضبط الزر في الجزء العلوي الأيمن من المودال
-              >
-                <MaterialCommunityIcons name="close" color={"blue"} size={30} />
-              </TouchableOpacity>
+                        {
+                          text: "نعم",
+                          onPress: () => {
+                            console.log("إلغاء الإضافة");
+                            setModalVisible(false); // إغلاق المودال
+                            // إعادة تصفير الحقول إذا لزم الأمر
+                            setNewFoodName("");
+                            setNewFoodDescription("");
+                            setNewFoodCalories("");
+                            setNewFoodProtein("");
+                            setNewFoodCarbs("");
+                            setNewFoodFat("");
+                          },
+                        },
+                      ],
+                      { cancelable: false }
+                    );
+                  }}
+                  style={{ alignSelf: "flex-end" }} // ضبط الزر في الجزء العلوي الأيمن من المودال
+                >
+                  <MaterialCommunityIcons
+                    name="close"
+                    color={"blue"}
+                    size={30}
+                  />
+                </TouchableOpacity>
 
-              <View style={styles.row}>
-                <TextInput
-                  placeholder="Food Name"
-                  placeholderTextColor="#777777"
-                  style={styles.inputN}
-                  value={newFoodName}
-                  onChangeText={setNewFoodName}
-                  returnKeyType="done"
-                />
+                <View style={styles.row}>
+                  <TextInput
+                    placeholder="Food Name"
+                    placeholderTextColor="#777777"
+                    backgroundColor="#f0f0f0"
+                    style={styles.inputN}
+                    value={newFoodName}
+                    onChangeText={setNewFoodName}
+                    returnKeyType="done"
+                  />
+                </View>
+
+                <View style={styles.row}>
+                  <TextInput
+                    placeholder="Food Description"
+                    placeholderTextColor="#777777"
+                    backgroundColor="#f0f0f0"
+                    style={styles.inputD}
+                    value={newFoodDescription}
+                    onChangeText={setNewFoodDescription}
+                    textAlignVertical="top" // جعل النص يبدأ من أعلى
+                    textAlign="left" // محاذاة النص لليسار
+                    multiline={true} // السماح بأكثر من سطر
+                  />
+                </View>
+
+                <View style={styles.row2}>
+                  <TextInput
+                    placeholder="Calories"
+                    placeholderTextColor="#777777"
+                    backgroundColor="#f0f0f0"
+                    style={styles.input}
+                    value={newFoodCalories}
+                    onChangeText={setNewFoodCalories}
+                    keyboardType="numeric"
+                    returnKeyType="done"
+                  />
+                  <TextInput
+                    placeholder="Protein"
+                    placeholderTextColor="#777777"
+                    backgroundColor="#f0f0f0"
+                    style={styles.input}
+                    value={newFoodProtein}
+                    onChangeText={setNewFoodProtein}
+                    keyboardType="numeric"
+                    returnKeyType="done"
+                  />
+                </View>
+
+                <View style={styles.row2}>
+                  <TextInput
+                    placeholder="Carbs"
+                    placeholderTextColor="#777777"
+                    backgroundColor="#f0f0f0"
+                    style={styles.input}
+                    value={newFoodCarbs}
+                    onChangeText={setNewFoodCarbs}
+                    keyboardType="numeric"
+                    returnKeyType="done"
+                  />
+                  <TextInput
+                    placeholder="Fat"
+                    placeholderTextColor="#777777"
+                    backgroundColor="#f0f0f0"
+                    style={styles.input}
+                    value={newFoodFat}
+                    onChangeText={setNewFoodFat}
+                    keyboardType="numeric"
+                    returnKeyType="done"
+                  />
+                </View>
+
+                <TouchableOpacity style={styles.addFood} onPress={addFood}>
+                  <Text>اضافة الطعام</Text>
+                </TouchableOpacity>
               </View>
-
-              <View style={styles.row}>
-                <TextInput
-                  placeholder="Food Description"
-                  placeholderTextColor="#777777"
-                  style={styles.inputD}
-                  value={newFoodDescription}
-                  onChangeText={setNewFoodDescription}
-                  textAlignVertical="top" // جعل النص يبدأ من أعلى
-                  textAlign="left" // محاذاة النص لليسار
-                  multiline={true} // السماح بأكثر من سطر
-                />
-              </View>
-
-              <View style={styles.row2}>
-                <TextInput
-                  placeholder="Calories"
-                  placeholderTextColor="#777777"
-                  style={styles.input}
-                  value={newFoodCalories}
-                  onChangeText={setNewFoodCalories}
-                  keyboardType="numeric"
-                  returnKeyType="done"
-                />
-                <TextInput
-                  placeholder="Protein"
-                  placeholderTextColor="#777777"
-                  style={styles.input}
-                  value={newFoodProtein}
-                  onChangeText={setNewFoodProtein}
-                  keyboardType="numeric"
-                  returnKeyType="done"
-                />
-              </View>
-
-              <View style={styles.row2}>
-                <TextInput
-                  placeholder="Carbs"
-                  placeholderTextColor="#777777"
-                  style={styles.input}
-                  value={newFoodCarbs}
-                  onChangeText={setNewFoodCarbs}
-                  keyboardType="numeric"
-                  returnKeyType="done"
-                />
-                <TextInput
-                  placeholder="Fat"
-                  placeholderTextColor="#777777"
-                  style={styles.input}
-                  value={newFoodFat}
-                  onChangeText={setNewFoodFat}
-                  keyboardType="numeric"
-                  returnKeyType="done"
-                />
-              </View>
-
-              <TouchableOpacity style={styles.addFood} onPress={addFood}>
-                <Text style={styles.addButtonText}>اضافة الطعام</Text>
-              </TouchableOpacity>
             </View>
-          </View>
-        </Modal>
-      </ScrollView>
+          </Modal>
+        </ScrollView>
+      </PaperProvider>
     </SafeAreaView>
   );
 };
@@ -378,30 +408,32 @@ const FoodScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#2b2b2b",
+    backgroundColor: "#003366",
   },
   scrollView: {
-    marginHorizontal: 20,
+    marginHorizontal: 10,
   },
   headerContainer: {
-    paddingVertical: 20,
-    justifyContent: "center",
-    alignItems: "center",
+    flexDirection: "row", // ترتيب العناصر أفقيًا
+    justifyContent: "space-between", // توزيع المسافة بين العناصر
+    alignItems: "center", // محاذاة العناصر في الوسط عموديًا
+    paddingVertical: 10, // الهامش الجانبي للحاوية
+    paddingTop: 5, // الهامش العلوي للحاوية
     borderBottomWidth: 1,
     borderBottomColor: "#e2e2e2",
   },
   title: {
+    width: "85%",
+    textAlign: "center",
     fontSize: 24,
     fontWeight: "bold",
     color: "#ffffff",
   },
   addButton: {
-    backgroundColor: "#5cb85c",
-    padding: 15,
+    width: "15%",
     borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 20,
   },
   addFood: {
     position: "absolute", // جعل موضع الزر ثابت
@@ -414,14 +446,9 @@ const styles = StyleSheet.create({
     alignSelf: "center", // لضمان التوسيط أفقيًا
     width: "90%", // عرض الزر
   },
-  addButtonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
   item: {
     backgroundColor: "#fff",
-    padding: 20,
+    padding: 8,
     borderRadius: 10,
     flexDirection: "row",
     justifyContent: "space-between",
@@ -435,24 +462,36 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontSize: 18,
+    fontWeight: "bold",
     color: "#333",
   },
+  citemText: {
+    justifyContent: "center", //Centered vertically
+    alignItems: "center", //Centered horizontally
+    flex: 1,
+    height: "100%",
+    width: "100%",
+  },
   deleteButton: {
-    backgroundColor: "#F44336",
-    padding: 10,
-    marginLeft: 5,
-    marginRight: 5,
-    borderRadius: 5,
+    position: "absolute", // جعل موضع الزر ثابت
+    bottom: 20, // المسافة من الأسفل
+    backgroundColor: "#455A64", // لون الخلفية للزر
+    padding: 15, // التبطين
+    borderRadius: 25, // تقريب الزوايا
+    justifyContent: "center", // محاذاة المحتويات بالوسط عموديًا
+    alignItems: "center", // محاذاة المحتويات بالوسط أفقيًا
+    alignSelf: "center", // لضمان التوسيط أفقيًا
+    width: "90%", // عرض الزر
   },
   closeButton: {
     backgroundColor: "gray",
-    padding: 10,
-    marginLeft: 5,
-    marginRight: 5,
-    borderRadius: 5,
   },
   ShowButton: {
-    backgroundColor: "#40b9ff",
+    borderRadius: 5,
+    height: "100%",
+    width: "80%",
+  },
+  MButton: {
     padding: 10,
     marginLeft: 5,
     marginRight: 5,
@@ -474,8 +513,10 @@ const styles = StyleSheet.create({
     width: "90%",
     height: "70%",
     margin: 20,
-    backgroundColor: "white",
+    backgroundColor: "#1565C0",
     borderRadius: 20,
+    borderWidth: 1,
+    borderColor: "#ffffff",
     padding: 35,
     alignItems: "center",
     shadowColor: "#000",
@@ -486,30 +527,30 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: "gray",
+    borderColor: "black",
     borderWidth: 1,
     width: "40%",
     marginBottom: 20,
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 25,
   },
   inputN: {
     height: 40,
-    borderColor: "gray",
+    borderColor: "black",
     borderWidth: 1,
     width: "100%",
     marginBottom: 10,
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 25,
   },
   inputD: {
     height: 100,
-    borderColor: "gray",
+    borderColor: "black",
     borderWidth: 1,
     width: "100%",
     marginBottom: 10,
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 15,
     textAlignVertical: "top", // محاذاة النص للأعلى
     textAlign: "left", // محاذاة النص لليسار
   },
@@ -523,9 +564,24 @@ const styles = StyleSheet.create({
 
   row2: {
     flexDirection: "row", // ترتيب العناصر في صف
-    justifyContent: "space-evenly", // توزيع المسافة بين العناصر بالتساوي
+    justifyContent: "space-around", // توزيع المسافة بين العناصر بالتساوي
     width: "100%", // تأكد من أن الصف يأخذ عرض الوالد كاملًا
     marginBottom: 10, // إضافة هامش أسفل الصف
+  },
+  row2c1: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    width: "100%",
+
+  },
+  row2c2: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+
   },
   rowsd: {
     flexDirection: "row", // ترتيب العناصر في صف
@@ -533,27 +589,39 @@ const styles = StyleSheet.create({
   titleShow: {
     flexDirection: "row", // ترتيب العناصر في صف
     width: "100%", // تأكد من أن الصف يأخذ عرض الوالد كاملًا
+    height:"auto",
     marginBottom: 10, // إضافة هامش أسفل الصف
     marginLeft: 20,
-    fontSize: 15,
+    fontWeight:"bold",
+  },  ttitleShow: {
+    color:"#F5F5F5",
+    fontSize:15,
+    fontWeight:"bold",
   },
   cboredr: {
+    backgroundColor: "#197ae6",
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: 20,
     width: "70%",
-    marginBottom: 10,
-    overflow: "scroll",
+    marginBottom: 20,
+    borderColor:"#F5F5F5",
+
   },
   chboredr: {
+    backgroundColor: "#197ae6",
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: 20,
     width: "70%",
-    marginBottom: 10,
+    marginBottom: 20,
+    borderColor:"#F5F5F5",
+
   },
   nameShow: {
     marginBottom: 10,
     marginTop: 10,
     textAlign: "center",
+    color:"#F5F5F5",
+
   },
   DisShow: {
     height: 80,
@@ -561,16 +629,15 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: "center",
     overflow: "visible",
+    color:"#F5F5F5",
+
   },
   otherShow: {
     marginBottom: 10,
     marginTop: 10,
     textAlign: "center",
-  },
-  flxShow: {
-    flexDirection: "row",
-    width: "50%",
-    overflow: "scroll",
+    color:"#F5F5F5",
+
   },
 });
 

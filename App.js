@@ -16,14 +16,15 @@ const WorkoutStack = createStackNavigator();
 
 function WorkoutStackNavigator() {
   return (
-    <WorkoutStack.Navigator screenOptions={{ headerShown: true }}>
+    <WorkoutStack.Navigator screenOptions={{ headerShown: false }}>
       <WorkoutStack.Screen
         name="WorkoutScreen"
         component={WorkoutScreen}
         options={{
           headerStyle: {
-            backgroundColor: "#2b2b2b", // لون الخلفية للهيدر لهذه الشاشة
+            backgroundColor: "#003366", // لون الخلفية للهيدر لهذه الشاشة
           },
+
           headerTintColor: "#fff", // لون النص والأيقونات في الهيدر لهذه الشاشة
           headerTitleStyle: {
             fontWeight: "bold",
@@ -37,6 +38,7 @@ function WorkoutStackNavigator() {
           headerStyle: {
             backgroundColor: "#2b2b2b", // لون الخلفية للهيدر لهذه الشاشة
           },
+          headerShown: true,
           headerBackTitle: "Back",
           headerTintColor: "#fff", // لون النص والأيقونات في الهيدر لهذه الشاشة
           headerTitleStyle: {
@@ -51,6 +53,7 @@ function WorkoutStackNavigator() {
           headerStyle: {
             backgroundColor: "#2b2b2b", 
           },
+          headerShown: true,
           headerBackTitle: "Back", 
           headerTintColor: "#fff", 
           headerTitleStyle: {
@@ -65,6 +68,7 @@ function WorkoutStackNavigator() {
           headerStyle: {
             backgroundColor: "#2b2b2b", // لون الخلفية للهيدر لهذه الشاشة
           },
+          headerShown: true,
           headerBackTitle: "Back",
           headerTintColor: "#fff", // لون النص والأيقونات في الهيدر لهذه الشاشة
           headerTitleStyle: {
@@ -84,9 +88,9 @@ function TabNavigator() {
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarStyle: { backgroundColor: "#6A0DAD" },
+        tabBarStyle: { backgroundColor: "#0D47A1" },
         tabBarActiveTintColor: "#FFFFFF",
-        tabBarInactiveTintColor: "#9B30FF",
+        tabBarInactiveTintColor: "#1E88E5",
       }}
     >
       <Tab.Screen

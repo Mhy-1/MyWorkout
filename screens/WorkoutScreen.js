@@ -63,7 +63,7 @@ const WorkoutScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#2b2b2b",
+    backgroundColor: "#003366",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",

@@ -12,8 +12,6 @@ const HomeScreen = ({ navigation }) => {
 
 
     <View style={styles.container}>
-      <Text style={styles.title}>Never give up !</Text>
-
       <View style={gbtn.container}>
         <TouchableOpacity
           style={styles.button1}
@@ -24,7 +22,6 @@ const HomeScreen = ({ navigation }) => {
             style={styles.buttonBackground}
             blurRadius={4}
           >
-            <Text style={styles.buttonText}>Workout</Text>
           </ImageBackground>
         </TouchableOpacity>
 
@@ -37,7 +34,6 @@ const HomeScreen = ({ navigation }) => {
             style={styles.buttonBackground}
             blurRadius={4}
           >
-            <Text style={styles.buttonText}>Food</Text>
           </ImageBackground>
         </TouchableOpacity>
       </View>
@@ -54,15 +50,10 @@ const gbtn = StyleSheet.create({
 });
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#2b2b2b",
+    backgroundColor: "#003366",
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-  },
-  title: {
-    color: "white", // لون الخط أبيض
-    fontSize: 25,
-    marginBottom: 20,
   },
   button1: {
     justifyContent: "center",
@@ -90,11 +81,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     overflow: "hidden", // لتطبيق borderRadius على الصورة
-  },
-  buttonText: {
-    fontSize: 30,
-    color: "white", // لون الخط أبيض
-    textAlign: "center", // محاذاة النص إلى الوسط
   },
 });
 
