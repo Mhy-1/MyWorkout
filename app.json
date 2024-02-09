@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "My-WorkOut",
-    "slug": "My-WorkOut",
+    "name": "MyWorkOut",
+    "slug": "MyWorkOut",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,7 +15,7 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+    "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
