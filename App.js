@@ -7,8 +7,8 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import HomeScreen from "./screens/HomeScreen";
 import FoodScreen from "./screens/FoodScreen";
 import WorkoutScreen from "./screens/WorkoutScreen";
-import PullScreen from "./screens/PullScreen";
-import PushScreen from "./screens/PushScreen";
+// import PullScreen from "./screens/PullScreen";
+// import PushScreen from "./screens/PushScreen";
 import LegScreen from "./screens/LegScreen";
 
 // إنشاء Stack Navigator لصفحات التمارين
@@ -31,12 +31,12 @@ function WorkoutStackNavigator() {
           },
         }}
       />
-      <WorkoutStack.Screen
+      {/* <WorkoutStack.Screen
         name="PushScreen"
         component={PushScreen}
         options={{
           headerStyle: {
-            backgroundColor: "#2b2b2b", // لون الخلفية للهيدر لهذه الشاشة
+            backgroundColor: "#003366", // لون الخلفية للهيدر لهذه الشاشة
           },
           headerShown: true,
           headerBackTitle: "Back",
@@ -51,7 +51,7 @@ function WorkoutStackNavigator() {
         component={PullScreen}
         options={{
           headerStyle: {
-            backgroundColor: "#2b2b2b", 
+            backgroundColor: "#003366", 
           },
           headerShown: true,
           headerBackTitle: "Back", 
@@ -60,13 +60,13 @@ function WorkoutStackNavigator() {
             fontWeight: "bold",
           },
         }}
-      />
+      /> */}
       <WorkoutStack.Screen
         name="LegScreen"
         component={LegScreen}
         options={{
           headerStyle: {
-            backgroundColor: "#2b2b2b", // لون الخلفية للهيدر لهذه الشاشة
+            backgroundColor: "#003366", // لون الخلفية للهيدر لهذه الشاشة
           },
           headerShown: true,
           headerBackTitle: "Back",

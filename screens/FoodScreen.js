@@ -10,7 +10,7 @@ import {
   Alert,
   SafeAreaView,
 } from "react-native";
-import { Button, Menu, Divider, PaperProvider } from "react-native-paper";
+import { Menu, Divider, PaperProvider } from "react-native-paper";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -27,9 +27,22 @@ const FoodScreen = () => {
   const [foods, setFoods] = useState([]);
   const [selectedFood, setSelectedFood] = useState(null);
   const [visibleMenuIndex, setVisibleMenuIndex] = React.useState(null);
-
   const openMenu = (index) => setVisibleMenuIndex(index);
   const closeMenu = () => setVisibleMenuIndex(null);
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const [editingFoodIndex, setEditingFoodIndex] = useState(null);
+
+  const openEditModal = (index) => {
+    const foodToEdit = foods[index];
+    setNewFoodName(foodToEdit.name);
+    setNewFoodDescription(foodToEdit.description);
+    setNewFoodCalories(foodToEdit.calories); // تأكد من تحويل الأرقام إلى نص
+    setNewFoodProtein(foodToEdit.Protein);
+    setNewFoodFat(foodToEdit.Fat);
+    setNewFoodCarbs(foodToEdit.Carbs);
+    setEditingFoodIndex(index); // تخزين مؤشر الطعام
+    setEditModalVisible(true);
+  };
 
   const validateInput = () => {
     let isValid = true;
@@ -112,9 +125,9 @@ const FoodScreen = () => {
         name: newFoodName,
         description: newFoodDescription,
         calories: newFoodCalories,
-        Protein: newFoodProtein,
-        Fat: newFoodFat,
-        Carbs: newFoodCarbs,
+        protein: newFoodProtein,
+        fat: newFoodFat,
+        carbs: newFoodCarbs,
       };
 
       const updatedFoods = [...foods, newFood];
@@ -127,6 +140,32 @@ const FoodScreen = () => {
       setNewFoodFat("");
       setNewFoodCarbs("");
       setModalVisible(false);
+    }
+  };
+
+  const applyEditFood = async () => {
+    if (validateInput()) {
+      const updatedFood = {
+        name: newFoodName,
+        description: newFoodDescription,
+        calories: newFoodCalories,
+        Protein: newFoodProtein,
+        Fat: newFoodFat,
+        Carbs: newFoodCarbs,
+      };
+      const updatedFoods = [...foods];
+      updatedFoods[editingFoodIndex] = updatedFood;
+      await storeFoods(updatedFoods);
+      setFoods(updatedFoods);
+      setEditModalVisible(false);
+      // إعادة تصفير الحقول والحالات
+      setNewFoodName("");
+      setNewFoodDescription("");
+      setNewFoodCalories("");
+      setNewFoodProtein("");
+      setNewFoodFat("");
+      setNewFoodCarbs("");
+      setEditingFoodIndex(null);
     }
   };
 
@@ -147,7 +186,7 @@ const FoodScreen = () => {
               onPress={() => setModalVisible(true)}
               style={styles.addButton}
             >
-              <Ionicons name="add-circle-outline" color={"white"} size={40} />
+              <Ionicons name="add-circle-outline" color={"#00ff00"} size={40} />
             </TouchableOpacity>
           </View>
 
@@ -182,7 +221,7 @@ const FoodScreen = () => {
                         </View>
                         <View style={styles.chboredr}>
                           <Text style={styles.otherShow}>
-                            {selectedFood.calories} g
+                            {selectedFood.calories} 
                           </Text>
                         </View>
                       </View>
@@ -254,7 +293,7 @@ const FoodScreen = () => {
                     >
                       <Ionicons
                         name="settings-outline"
-                        color={"black"}
+                        color={"#ffffff"}
                         size={30}
                       />
                     </TouchableOpacity>
@@ -267,12 +306,146 @@ const FoodScreen = () => {
                     }}
                     title="حذف الطعام"
                   />
-                  <Menu.Item onPress={() => {}} title=" تعديل الطعام " />
+                  <Menu.Item
+                    onPress={() => {
+                      openEditModal(index);
+                      closeMenu(); // إغلاق القائمة
+                    }}
+                    title=" تعديل الطعام "
+                  />
                   <Divider />
                 </Menu>
               </View>
             </View>
           ))}
+
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={editModalVisible}
+            onRequestClose={() => setEditModalVisible(false)}
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <TouchableOpacity
+                  onPress={() => {
+                    // عرض تنبيه يسأل المستخدم إذا كان يرغب في إلغاء الإضافة
+                    Alert.alert(
+                      "إلغاء التعديل",
+                      "هل أنت متأكد أنك تريد إلغاء تعديل الطعام؟",
+                      [
+                        {
+                          text: "تراجع",
+                          onPress: () => console.log("تراجع عن الإلغاء"),
+                          style: "cancel",
+                        },
+                        {
+                          text: "نعم",
+                          onPress: () => {
+                            console.log("إلغاء التعديل");
+                            setEditModalVisible(false); // إغلاق المودال
+                            setNewFoodName("");
+                            setNewFoodDescription("");
+                            setNewFoodCalories("");
+                            setNewFoodProtein("");
+                            setNewFoodCarbs("");
+                            setNewFoodFat("");
+                          },
+                        },
+                      ],
+                      { cancelable: false }
+                    );
+                  }}
+                  style={{ alignSelf: "flex-end" }} // ضبط الزر في الجزء العلوي الأيمن من المودال
+                >
+                  <MaterialCommunityIcons
+                    name="close"
+                    color={"blue"}
+                    size={30}
+                  />
+                </TouchableOpacity>
+
+                <View style={styles.row}>
+                  <TextInput
+                    placeholder="Food Name"
+                    placeholderTextColor="#777777"
+                    backgroundColor="#f0f0f0"
+                    style={styles.inputN}
+                    value={newFoodName}
+                    onChangeText={setNewFoodName}
+                    returnKeyType="done"
+                  />
+                </View>
+
+                <View style={styles.row}>
+                  <TextInput
+                    placeholder="Food Description"
+                    placeholderTextColor="#777777"
+                    backgroundColor="#f0f0f0"
+                    style={styles.inputD}
+                    value={newFoodDescription}
+                    onChangeText={setNewFoodDescription}
+                    textAlignVertical="top" // جعل النص يبدأ من أعلى
+                    textAlign="left" // محاذاة النص لليسار
+                    multiline={true} // السماح بأكثر من سطر
+                  />
+                </View>
+
+                <View style={styles.row2}>
+                  <TextInput
+                    placeholder="Calories"
+                    placeholderTextColor="#777777"
+                    backgroundColor="#f0f0f0"
+                    style={styles.input}
+                    value={newFoodCalories}
+                    onChangeText={setNewFoodCalories}
+                    keyboardType="numeric"
+                    returnKeyType="done"
+                  />
+                  <TextInput
+                    placeholder="Protein"
+                    placeholderTextColor="#777777"
+                    backgroundColor="#f0f0f0"
+                    style={styles.input}
+                    value={newFoodProtein}
+                    onChangeText={setNewFoodProtein}
+                    keyboardType="numeric"
+                    returnKeyType="done"
+                  />
+                </View>
+
+                <View style={styles.row2}>
+                  <TextInput
+                    placeholder="Carbs"
+                    placeholderTextColor="#777777"
+                    backgroundColor="#f0f0f0"
+                    style={styles.input}
+                    value={newFoodCarbs}
+                    onChangeText={setNewFoodCarbs}
+                    keyboardType="numeric"
+                    returnKeyType="done"
+                  />
+                  <TextInput
+                    placeholder="Fat"
+                    placeholderTextColor="#777777"
+                    backgroundColor="#f0f0f0"
+                    style={styles.input}
+                    value={newFoodFat}
+                    onChangeText={setNewFoodFat}
+                    keyboardType="numeric"
+                    returnKeyType="done"
+                  />
+                </View>
+
+                <TouchableOpacity
+                  style={styles.addFood}
+                  onPress={applyEditFood}
+                >
+                  <Text>تعديل الطعام</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
 
           <Modal
             animationType="slide"
@@ -447,7 +620,7 @@ const styles = StyleSheet.create({
     width: "90%", // عرض الزر
   },
   item: {
-    backgroundColor: "#fff",
+    backgroundColor: "#0059b3",
     padding: 8,
     borderRadius: 10,
     flexDirection: "row",
@@ -463,7 +636,7 @@ const styles = StyleSheet.create({
   itemText: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#333",
+    color: "#ffffff",
   },
   citemText: {
     justifyContent: "center", //Centered vertically
@@ -532,7 +705,7 @@ const styles = StyleSheet.create({
     width: "40%",
     marginBottom: 20,
     padding: 10,
-    borderRadius: 25,
+    borderRadius: 10,
   },
   inputN: {
     height: 40,
@@ -541,7 +714,7 @@ const styles = StyleSheet.create({
     width: "100%",
     marginBottom: 10,
     padding: 10,
-    borderRadius: 25,
+    borderRadius: 10,
   },
   inputD: {
     height: 100,
@@ -550,7 +723,7 @@ const styles = StyleSheet.create({
     width: "100%",
     marginBottom: 10,
     padding: 10,
-    borderRadius: 15,
+    borderRadius: 10,
     textAlignVertical: "top", // محاذاة النص للأعلى
     textAlign: "left", // محاذاة النص لليسار
   },
@@ -574,14 +747,12 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingHorizontal: 10,
     width: "100%",
-
   },
   row2c2: {
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
-
   },
   rowsd: {
     flexDirection: "row", // ترتيب العناصر في صف
@@ -589,39 +760,37 @@ const styles = StyleSheet.create({
   titleShow: {
     flexDirection: "row", // ترتيب العناصر في صف
     width: "100%", // تأكد من أن الصف يأخذ عرض الوالد كاملًا
-    height:"auto",
+    height: "auto",
     marginBottom: 10, // إضافة هامش أسفل الصف
     marginLeft: 20,
-    fontWeight:"bold",
-  },  ttitleShow: {
-    color:"#F5F5F5",
-    fontSize:15,
-    fontWeight:"bold",
+    fontWeight: "bold",
+  },
+  ttitleShow: {
+    color: "#F5F5F5",
+    fontSize: 15,
+    fontWeight: "bold",
   },
   cboredr: {
     backgroundColor: "#197ae6",
     borderWidth: 1,
-    borderRadius: 20,
-    width: "70%",
+    borderRadius: 10,
+    width: "80%",
     marginBottom: 20,
-    borderColor:"#F5F5F5",
-
+    borderColor: "#F5F5F5",
   },
   chboredr: {
     backgroundColor: "#197ae6",
     borderWidth: 1,
-    borderRadius: 20,
+    borderRadius: 10,
     width: "70%",
     marginBottom: 20,
-    borderColor:"#F5F5F5",
-
+    borderColor: "#F5F5F5",
   },
   nameShow: {
     marginBottom: 10,
     marginTop: 10,
     textAlign: "center",
-    color:"#F5F5F5",
-
+    color: "#F5F5F5",
   },
   DisShow: {
     height: 80,
@@ -629,15 +798,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: "center",
     overflow: "visible",
-    color:"#F5F5F5",
-
+    color: "#F5F5F5",
   },
   otherShow: {
     marginBottom: 10,
     marginTop: 10,
     textAlign: "center",
-    color:"#F5F5F5",
-
+    color: "#F5F5F5",
   },
 });
 
